@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carta para Pilulita</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      font-family: 'Cursive', sans-serif;
+    }
+    .envelope {
+      position: relative;
+      width: 300px;
+      height: 250px;
+      background: #ff6b81;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.5s;
+      box-shadow: 0 12px 20px rgba(0,0,0,0.4);
+      overflow: hidden;
+    }
+    .envelope:hover {
+      transform: translateY(-10px);
+    }
+    .envelope::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60%;
+      background: #ff4d6d;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      z-index: 3;
+      transition: transform 0.5s ease;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+    .envelope.open::before {
+      transform: translateY(-120%);
+    }
+    .letter {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border-radius: 10px;
+      box-sizing: border-box;
+      padding: 30px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+      text-align: center;
+      transition: transform 0.5s ease;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .envelope.open .letter {
+      transform: translateY(-100%);
+    }
+
+    .heart {
+      position: absolute;
+      color: #ff6b81;
+      font-size: 24px;
+      opacity: 0.5;
+    }
+    .heart-tl { top: 10px; left: 10px; }
+    .heart-tr { top: 10px; right: 10px; }
+    .heart-bl { bottom: 10px; left: 10px; }
+    .heart-br { bottom: 10px; right: 10px; }
+
+    .page1 {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-y: auto;
+      padding: 15px 20px;
+    }
+    .page1 p {
+      margin: 0;
+      font-style: italic;
+      color: #333;
+      font-size: 14px;
+      line-height: 1.5;
+      max-width: 100%;
+      text-align: center;
+      transform: translateY(0);
+      padding: 0px;
+    }
+
+    .page1::-webkit-scrollbar {
+      width: 6px;
+    }
+    .page1::-webkit-scrollbar-track {
+      background: rgba(255,107,129,0.1);
+    }
+    .page1::-webkit-scrollbar-thumb {
+      background: #ff6b81;
+      border-radius: 3px;
+    }
+
+    .page2 {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+    .page2 img {
+      width: 80%;
+      max-width: 300px;
+      height: auto;
+    }
+
+    .shadow {
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      height: 30px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 50%;
+      filter: blur(10px);
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="envelope" onclick="togglePage()">
+    <div class="letter">
+      <div class="heart heart-tl">💖</div>
+      <div class="heart heart-tr">💖</div>
+      <div class="heart heart-bl">💖</div>
+      <div class="heart heart-br">💖</div>
+
+      <div class="page1">
+        <p>Buenos días mi amor hermosa, espero que hayas dormido bien y espero que tengas un buen día. 💖<br><br>
+        La verdad es que con vos estoy sintiendo cosas completamente nuevas, por fin puedo decir que alguien por primera vez en la vida me ama, me apoya, me comprende, me motiva a seguir, se alegra de mis logros, aun así sean pequeños. ✨<br><br>
+        Sentir todo este tipo de cosas son completamente nuevas para mí, amo mucho que las esté sintiendo con vos y que todo esto se vaya dando me pone muy muy feliz. 😍<br><br>
+        Gracias por llegar a mi vida, que sepas que sos la más hermosa y buenita del mundo, la más inteligente, la más fuerte, la más tierna y la que tiene los ojitos más hermosos del mundo. 🥰<br><br>
+        Te amo mucho, mi novia hermosa y mi bailarina, la mejor del mundo. 💘</p>
+      </div>
+
+      <div class="page2">
+        <img
+          src="https://i.pinimg.com/236x/da/0c/4c/da0c4c8eec8dad798f80d048b7e13c41.jpg"
+          alt="Decoración"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="shadow"></div>
+
+  <script>
+    let currentPage = 1;
+    function togglePage() {
+      const envelope = document.querySelector('.envelope');
+      const page1 = document.querySelector('.page1');
+      const page2 = document.querySelector('.page2');
+
+      if (!envelope.classList.contains('open')) {
+        envelope.classList.add('open');
+        page1.style.display = 'flex';
+        page2.style.display = 'none';
+      } else {
+        if (currentPage === 1) {
+          page1.style.display = 'none';
+          page2.style.display = 'flex';
+          currentPage = 2;
+        } else {
+          page2.style.display = 'none';
+          page1.style.display = 'flex';
+          currentPage = 1;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
